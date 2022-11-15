@@ -1,0 +1,18 @@
+{
+  "name": "binotify-rest-service",
+  "version": "1.0.0",
+  "description": "binotify rest service using express.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.informatika.org/if3110-2022-k01-02-27/binotify-rest-service.git"
+  },
+  "author": "Ubaidillah Ariq, Fikri Ihsan, Gibran Darmawan",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
