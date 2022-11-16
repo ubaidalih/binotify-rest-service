@@ -1,4 +1,5 @@
 const { login, register, checkRegister } = require("../services/user");
+const {generateAccessToken} = require("../auth/jwt");
 
 const crypto = require('crypto')
 const algorithm = "aes-256-cbc"
@@ -27,7 +28,8 @@ router.post("/login", async (req, res) => {
     }
     else{
         if (decrypt(account[0].password) == password) {
-            return res.json({message: "Login success", id: account[0].user_id, name: account[0].name, isAdmin: account[0].isAdmin});
+            const token = generateAccessToken({ user_id: account[0].user_id, name: account[0].name, isAdmin: account[0].isAdmin});
+            return res.json({message: "Login success", token: token});
         }
         else{
             return res.json({message: "Wrong password"});
@@ -48,7 +50,8 @@ router.post("/register", async (req, res) => {
     }
     else{
         const account = await register(email, password, username, name);
-        return res.json({message: "Register success", id: account[0].user_id, name: account[0].name, isAdmin: account[0].isAdmin});
+        const token = generateAccessToken({ user_id: account[0].user_id, name: account[0].name, isAdmin: account[0].isAdmin});
+        return res.json({message: "Register success", token: token});
     }
 });
 
