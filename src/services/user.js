@@ -7,6 +7,13 @@ const getPenyanyi = async () => {
     return rows;
   };
 
+  const getPenyanyiById = async (user_id) => {
+    const [rows] = await createMySQLConnection().then((conn) => {
+      return conn.execute("SELECT `name` FROM `user` WHERE `user_id` = ?", [user_id]);
+    });
+    return rows;
+  };
+
   const login = async (email) => {
     const [rows] = await createMySQLConnection().then((conn) => {
         return conn.execute("SELECT `user_id`, `password`, `name`, `isAdmin` FROM `user` WHERE `email` = ?", [email]);
@@ -38,4 +45,4 @@ const checkRegister = async (email, username) => {
 };
 
 
-module.exports = {getPenyanyi, login, register, checkRegister};
+module.exports = {getPenyanyi, login, register, checkRegister, getPenyanyiById};

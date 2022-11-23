@@ -23,13 +23,13 @@ router.post("/create", authenticateUserToken, uploadAudio, async (req, res) => {
     return res.json(result);
 });
 
-router.get("/read",authenticateUserToken, async (req, res) => {
-    const penyanyi_id = req.user_id;
+router.get("/read", async (req, res) => {
+    const penyanyi_id = req.query["user_id"];
     const listLagu = await readSong(penyanyi_id);
     return res.json(listLagu);
 });
 
-router.get("/songdetail",authenticateUserToken, async (req, res) => {
+router.get("/songdetail", async (req, res) => {
     const song_id = req.query["song_id"];
     const detailLagu = await detailSong(song_id);
     return res.json(detailLagu);

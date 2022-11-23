@@ -9,7 +9,7 @@ const createSong = async (judul, penyanyi_id, audio_path) => {
 
   const readSong = async (penyanyi_id) => {
     const [rows] = await createMySQLConnection().then((conn) => {
-      return conn.execute("SELECT `song_id`, `judul` FROM `song` WHERE `penyanyi_id` = ?", [penyanyi_id]);
+      return conn.execute("SELECT `song_id`, `judul`, `audio_path` FROM `song` WHERE `penyanyi_id` = ?", [penyanyi_id]);
     });
     return rows;
   };
