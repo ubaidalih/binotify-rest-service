@@ -18,7 +18,7 @@ const router = require("express").Router();
 router.post("/create", authenticateUserToken, uploadAudio, async (req, res) => {
     const judul = req.body.judul;
     const penyanyi_id = req.user_id;
-    const audio_path = req.file.path;
+    const audio_path = "http://localhost:3000/audio/" + req.file.filename;
     const result = await createSong(judul, penyanyi_id, audio_path);
     return res.json(result);
 });
@@ -44,7 +44,7 @@ router.post("/delete",authenticateUserToken, async (req, res) => {
 router.post("/update",authenticateUserToken, uploadAudio, async (req, res) => {
     const judul = req.body.judul;
     const song_id = req.body.song_id;
-    const audio_path = req.file.path;
+    const audio_path = "http://localhost:3000/audio/" + req.file.filename;
     const result = await updateSong(judul, audio_path, song_id) ;
     return res.json(result);
 });
