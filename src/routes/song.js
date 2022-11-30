@@ -14,6 +14,8 @@ const storage = multer.diskStorage({
 const uploadAudio = multer({ storage }).single('audio')
 
 const router = require("express").Router();
+const soap = require('soap')
+const url = 'http://localhost:3060/binotify-soap-service/subscription?wsdl'
 
 router.post("/create", authenticateUserToken, uploadAudio, async (req, res) => {
     const judul = req.body.judul;
@@ -24,9 +26,25 @@ router.post("/create", authenticateUserToken, uploadAudio, async (req, res) => {
 });
 
 router.get("/read", async (req, res) => {
-    const penyanyi_id = req.query["user_id"];
-    const listLagu = await readSong(penyanyi_id);
-    return res.json(listLagu);
+    const penyanyi_id = req.query["user_id"]
+    args = {
+      arg0 : penyanyi_id,
+      arg1 : req.body.subscriber_id
+    }
+    soap.createClient(url,{},function(err,client){
+      client.acceptedRequest(args,function(err,result){
+        flag = result['return']
+        if (flag===true){
+          const listLagu = readSong(penyanyi_id)
+          listLagu.then(function(result){
+            return res.json(result)
+          })
+        }
+        else{
+          return res.json("Your account not subscribe this Artist")
+        }
+      })
+    })
 });
 
 router.get("/songdetail", async (req, res) => {
