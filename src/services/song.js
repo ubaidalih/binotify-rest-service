@@ -29,10 +29,23 @@ const createSong = async (judul, penyanyi_id, audio_path) => {
   };
 
   const updateSong = async (judul, audio_path, song_id) => {
-    const [result] = await createMySQLConnection().then((conn) => {
-      return conn.execute("UPDATE `song` SET `judul` = ? , `audio_path` = ? WHERE `song_id` = ?", [judul, audio_path, song_id]);
-    });
-    return result;
+    if(judul != "" && audio_path != ""){
+      const [result] = await createMySQLConnection().then((conn) => {
+        return conn.execute("UPDATE `song` SET `judul` = ? , `audio_path` = ? WHERE `song_id` = ?", [judul, audio_path, song_id]);
+      });
+      return result;
+    } else if(judul == ""){
+      const [result] = await createMySQLConnection().then((conn) => {
+        return conn.execute("UPDATE `song` SET `audio_path` = ? WHERE `song_id` = ?", [audio_path, song_id]);
+      });
+      return result;
+    } else if(audio_path == ""){
+      const [result] = await createMySQLConnection().then((conn) => {
+        return conn.execute("UPDATE `song` SET `judul` = ? WHERE `song_id` = ?", [judul, song_id]);
+      });
+      return result;
+    }
+
   };
 
 module.exports = {createSong, readSong, detailSong, updateSong, deleteSong};

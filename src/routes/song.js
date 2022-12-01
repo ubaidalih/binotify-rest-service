@@ -65,9 +65,15 @@ router.post("/delete",authenticateUserToken, async (req, res) => {
 });
 
 router.post("/update",authenticateUserToken, uploadAudio, async (req, res) => {
-    const judul = req.body.judul;
+    var judul = "";
+    if(req.body.judul != ""){
+      judul = req.body.judul;
+    }
     const song_id = req.body.song_id;
-    const audio_path = "http://localhost:3000/audio/" + req.file.filename;
+    var audio_path = "";
+    if(req.file != null){
+      audio_path = "http://localhost:3000/audio/" + req.file.filename;
+    }
     const result = await updateSong(judul, audio_path, song_id) ;
     return res.json(result);
 });
