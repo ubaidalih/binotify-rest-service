@@ -1,8 +1,9 @@
 const router = require("express").Router()
+const {authenticateUserToken, authenticateAdminToken} = require("../auth/jwt");
 const soap = require('soap')
 const url = 'http://localhost:3060/binotify-soap-service/subscription?wsdl'
 
-router.get("/", (req,res)=>{
+router.get("/",authenticateAdminToken, (req,res)=>{
     soap.createClient(url, {}, function(err, client) {
         client.getAllRequest(function(err, result) {
             return res.json(result['return'])
@@ -10,7 +11,7 @@ router.get("/", (req,res)=>{
     })
 })
 
-router.post("/approval" , async(req,res)=>{
+router.post("/approval" ,authenticateAdminToken, async(req,res)=>{
     args ={
         arg0 : req.body.creator_id,
         arg1 : req.body.subscriber_id
@@ -22,7 +23,7 @@ router.post("/approval" , async(req,res)=>{
     })
 })
 
-router.post("/reject" , async(req,res)=>{
+router.post("/reject" ,authenticateAdminToken, async(req,res)=>{
     args ={
         arg0 : req.body.creator_id,
         arg1 : req.body.subscriber_id
