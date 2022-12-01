@@ -25,26 +25,31 @@ router.post("/create", authenticateUserToken, uploadAudio, async (req, res) => {
     return res.json(result);
 });
 
-router.get("/read", async (req, res) => {
-    const penyanyi_id = req.query["user_id"]
+router.post("/read", async (req, res) => {
+    // const penyanyi_id = req.query["user_id"]
     args = {
-      arg0 : penyanyi_id,
+      arg0 : req.body.creator_id,
       arg1 : req.body.subscriber_id
     }
-    soap.createClient(url,{},function(err,client){
-      client.acceptedRequest(args,function(err,result){
-        flag = result['return']
-        if (flag===true){
-          const listLagu = readSong(penyanyi_id)
-          listLagu.then(function(result){
-            return res.json(result)
-          })
-        }
-        else{
-          return res.json("Your account not subscribe this Artist")
-        }
+    if(args.arg1 === -1){
+      const listLagu = await readSong(args.arg0)
+      return res.json(listLagu);
+    } else {
+      soap.createClient(url,{},function(err,client){
+        client.acceptedRequest(args,function(err,result){
+          flag = result['return']
+          if (flag===true){
+            const listLagu = readSong(penyanyi_id)
+            listLagu.then(function(result){
+              return res.json(result)
+            })
+          }
+          else{
+            return res.json("Your account not subscribe this Artist")
+          }
+        })
       })
-    })
+    }
 });
 
 router.get("/songdetail", async (req, res) => {
