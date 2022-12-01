@@ -29,7 +29,8 @@ router.post("/read", async (req, res) => {
     // const penyanyi_id = req.query["user_id"]
     args = {
       arg0 : req.body.creator_id,
-      arg1 : req.body.subscriber_id
+      arg1 : req.body.subscriber_id,
+      arg2 : process.env.REST_API_KEY
     }
     if(args.arg1 === -1){
       const listLagu = await readSong(args.arg0)
