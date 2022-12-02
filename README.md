@@ -7,12 +7,14 @@ Binotify REST Service merupakan web service yang bersifat REST. Web Service ini 
 
 # Requirement
 * Node.js (Express)
+* MySQL
 
 # Cara Menjalankan Server
 1. Clone repository
-2. Jalankan `npm install` pada folder utama, untuk install dependencies
-3. Masuk ke folder src dengan `cd src`, lalu run service dengan `node index.js`
-4. Service berjalan pada http://localhost:3000 dan dapat digunakan
+2. Setup database MySQL dengan config seperti pada file .env menggunakan dump pada folder data
+3. Jalankan `npm install` pada folder utama, untuk install dependencies
+4. Masuk ke folder src dengan `cd src`, lalu run service dengan `node index.js`
+5. Service berjalan pada http://localhost:3000 dan dapat digunakan
 
 # Endpoint
 1. Endpoint List Penyanyi (http://localhost:3000/api/listpenyanyi/)
