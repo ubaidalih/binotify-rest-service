@@ -3,7 +3,7 @@
 Binotify REST Service merupakan web service yang bersifat REST. Web Service ini berguna untuk menyediakan data untuk binotify-app dan binotify-premium-app. Service ini diimplementasikan menggunakan Node.js dengan framework express. Service akan menerima dan mengirim response melalui HTTP protocol.
 
 # Skema Basis Data
-![image.png](./screenshot/image.jpg)
+![image.png](./screenshot/image.png)
 
 # Requirement
 * Node.js (Express)
